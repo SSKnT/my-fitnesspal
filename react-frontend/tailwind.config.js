@@ -1,28 +1,76 @@
+import tailwindcssAnimate from "tailwindcss-animate";
+import formsPlugin from "@tailwindcss/forms";
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
+  darkMode: ["class"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/shadcn-ui/**/*.js", // Include ShadCN components
+  ],
   theme: {
     extend: {
       colors: {
-        // Add your custom colors here
-        primary: "#FFC0CB", // Soft Pink for buttons, accents
-        accent: "#2596BE", // Bright Blue for links, CTAs
-
-        // Backgrounds
-        darkBackground: "#121212", // Dark background for dark mode
-
-        // Text
-        lightText: "#E0E0E0", // Light gray for text on dark background
-        primaryText: "#FFFFFF", // White text on dark backgrounds
-        darkText: "#212121", // Dark text for light backgrounds
-        secondaryText: "#A0A0A0", // Gray for secondary text
-
-        // State colors
-        success: "#4CAF50", // Success messages
-        error: "#F44336", // Error messages
-        warning: "#FFC107", // Warning messages
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        darkBackground: "#121212",
+        accentBackground: "#FF8095",
+        lightText: "#E0E0E0",
+        primaryText: "#FFFFFF",
+        darkText: "#212121",
+        secondaryText: "#A0A0A0",
+        success: "#4CAF50",
+        error: "#F44336",
+        warning: "#FFC107",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        chart: {
+          1: "hsl(var(--chart-1))",
+          2: "hsl(var(--chart-2))",
+          3: "hsl(var(--chart-3))",
+          4: "hsl(var(--chart-4))",
+          5: "hsl(var(--chart-5))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
       },
     },
   },
-  plugins: [],
+  plugins: [tailwindcssAnimate, formsPlugin],
 };
