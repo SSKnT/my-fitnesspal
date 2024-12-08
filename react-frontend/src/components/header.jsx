@@ -58,7 +58,9 @@ const Dropdown = () => {
         "Profile",
         "Settings",
         "Logout"
-      ]} />
+      ]}
+      label="My Account"
+       />
   )
 }
 

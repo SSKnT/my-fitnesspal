@@ -8,7 +8,7 @@ import {
   } from "@/components/ui/dropdown-menu"
 
 
-const DropdownComponent = ({trigger, content}) => {
+const DropdownComponent = ({trigger, content, label=''}) => {
     return(
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -17,7 +17,7 @@ const DropdownComponent = ({trigger, content}) => {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className='bg-darkBackground border-gray-500 text-accent border-opacity-50 font-inter' >
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>{label}</DropdownMenuLabel>
             <DropdownMenuSeparator className='bg-gray-500 bg-opacity-50' />
             {content.map((item, index) => (
                 <DropdownMenuItem key={index}>{item}</DropdownMenuItem>

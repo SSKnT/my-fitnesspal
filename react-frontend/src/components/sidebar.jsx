@@ -1,4 +1,5 @@
 import { Separator } from '@/components/ui/separator';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
     return(
@@ -32,14 +33,14 @@ const SidebarNav = () =>{
                     <path d="M19 11H5M19 11C20.1046 11 21 11.8954 21 13V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V13C3 11.8954 3.89543 11 5 11M19 11V9C19 7.89543 18.1046 7 17 7M5 11V9C5 7.89543 5.89543 7 7 7M7 7V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V7M7 7H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             ),
-            link: '#'
+            link: 'dashboard'
         },
         {
             name: "Workouts",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
             ),
-            link: '#'
+            link: 'workouts'
         },
         {
             name: "Community",
@@ -48,14 +49,14 @@ const SidebarNav = () =>{
                   <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
                 </svg>
             ),
-            link: '#'
+            link: 'community'
         },
         {
             name: "Profile",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/><circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/></svg>
             ),
-            link: '#'
+            link: 'profile'
         },
         {
             name: "Settings",
@@ -65,7 +66,7 @@ const SidebarNav = () =>{
                     <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             ),
-            link: '#'
+            link: 'settings'
         }
     ];
 
@@ -73,10 +74,10 @@ const SidebarNav = () =>{
         <div className="flex flex-col justify-between flex-1 mt-5">
             <nav className='h-full flex flex-col'>
                 {navItems.map((item, index) => (
-                    <a key={index} className={`${item.name === 'Settings'? 'mt-auto' : ''} flex items-center px-4 py-2 text-accentBackground hover:bg-white hover:bg-opacity-5 focus:border-r-2 focus:border-accentBackground transition-colors duration-200 `} href={item.link}>
+                    <Link key={index} className={`${item.name === 'Settings'? 'mt-auto' : ''} flex items-center px-4 py-2 text-accentBackground hover:bg-white hover:bg-opacity-5 focus:border-l-2 focus:border-accentBackground transition-colors duration-200 `} to={item.link}>
                         {item.icon}
                         <span className="mx-4 font-medium text-gray-500">{item.name}</span>
-                    </a>
+                    </Link>
                 ))}
             </nav>
         </div>

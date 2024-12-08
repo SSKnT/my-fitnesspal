@@ -21,8 +21,8 @@ const data = [
 
 const AreaChartComponent = () => {
     return (
-      <div className="bg-[#121212] p-6 rounded-xl shadow-lg">
-        <h2 className="text-white text-center font-inter  text-2xl mb-4">
+      <div className="bg-[#121212] pt-6 pb-6 pr-6 rounded-xl shadow-lg ml-0">
+        <h2 className="text-white text-center font-inter  text-2xl mb-1">
           Exercise Completion
         </h2>
         <ResponsiveContainer width="100%" height={300}>

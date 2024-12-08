@@ -80,3 +80,28 @@ body, html {
     @apply bg-background text-foreground;
   }
 }
+
+/* Subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Slim width */
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Dark background for track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3a3a3a; /* Slightly lighter for thumb */
+  border-radius: 4px; /* Rounded edges for smooth look */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5a5a5a; /* Slightly brighter on hover */
+}
+
+/* Firefox support */
+body {
+  scrollbar-width: thin; /* Slim scrollbar */
+  scrollbar-color: #3a3a3a #1e1e1e; /* Thumb and track colors */
+}
+
