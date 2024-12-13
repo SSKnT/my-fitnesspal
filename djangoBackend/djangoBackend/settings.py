@@ -152,7 +152,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # Simple JWT
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),  # Example access token lifetime
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  # Example access token lifetime
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # Example refresh token lifetime
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,  
