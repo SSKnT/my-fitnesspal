@@ -18,3 +18,8 @@ class CustomUser(AbstractUser):
         email = self.email
         hashed_email = hashlib.md5(email.encode()).hexdigest()
         return f"https://www.gravatar.com/avatar/{hashed_email}?d=identicon"
+
+    def save(self, *args, **kwargs):
+        if not self.avatar:
+            self.avatar = self.get_gravatar_url()
+        super().save(*args, **kwargs)

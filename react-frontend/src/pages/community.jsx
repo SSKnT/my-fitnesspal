@@ -1,23 +1,32 @@
 import DropdownComponent from "@/components/dropdown"
 import RightSidebar from "@/components/community_sidebar"
 import Post from "@/components/Post"
-
-
-{/* Dummy data for testing, To be removed before prod */} 
-const posts = [{
-    date : "1hr. ago",
-    user : {
-        username: "user",
-        avatar: "https://randomuser.me/api/portraits"
-    },
-    img : 'https://images.unsplash.com/photo-1733528321357-9fb5e041a5de?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    heading : "The Start of a new journey is always the hardest",
-    likes : 100
-}]
-
-
+import { getCommunityPostsAPI } from "@/APIs/api"
+import { useAuth } from "@/context/AuthProvider"
+import { useEffect, useState } from "react"
+import { Navigate } from "react-router-dom"
 
 const Community = () => {
+    const [posts, setPosts] = useState([]);
+    const {user, loading} = useAuth();
+
+    if(loading) return <h1 className="bg-darkBackground text-accentBackground font-bold text-5xl mx-auto my-auto">Loading...</h1>;
+
+    if(!user) return <Navigate to='/auth' />
+
+    useEffect(() =>{
+        const fetchPosts = async () =>{
+            try{
+                const response = await getCommunityPostsAPI();
+                setPosts(response);
+            } catch(error){
+                alert("Error fetching posts");
+            }
+                
+        }
+        fetchPosts();
+    },[])
+
     return(
         <div className="h-full w-full flex flex-row space-x-2 relative overflow-y-hidden">
             <MainContent posts={posts} />
@@ -31,7 +40,7 @@ const MainContent = ({posts}) => {
         <div className="h-full w-full md:w-[70%] flex flex-col space-y-4 overflow-y-hidden ">
             <div className="h-full w-full flex flex-col space-y-2 overflow-y-hidden">
                 <Sort />
-                {posts.map((post) => <Post user={post.user} img={post.img} heading={post.heading} likes={post.likes} date={post.date} />)}
+                {posts.map((post) => <Post user={post.user} img={post.img} heading={post.title} likes={0} date={post.created} />)}
             </div>
         </div>
     )

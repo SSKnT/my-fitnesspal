@@ -1,4 +1,3 @@
-import Button from "@/components/button";
 import AreaChartComponent from "@/components/chart";
 import WorkoutTable from "@/components/table";
 import FitnessStats from "@/components/stats";
@@ -11,10 +10,10 @@ const Dashboard = () => {
                 {/* Div for dashboard content e.g. charts etc */}
                 <div className='flex flex-col md:py-2 w-full md:w-[75%] h-full md:pr-4 md:mt-4'>
                     <div className='grid grid-cols-1 md:grid-cols-2 px-4 py-4 gap-4 w-full h-[60%]'>
-                        <Card icon={<i class="fa-solid fa-fire"></i>} heading='Energy burn' text='1345 Kal' bg='bg-yellow-100'/>
-                        <Card icon={<i class="fa-solid fa-heart"></i>} heading='Heart rate' text='78 bpm' bg='bg-red-100'/>
-                        <Card icon={<i class="fa-solid fa-running"></i>} heading='Steps' text='12,345' bg='bg-green-100'/>
-                        <Card icon={<i class="fa-solid fa-bed"></i>} heading='Sleep' text='8h 45m' bg='bg-blue-200'/>
+                        <Card icon={<i className="fa-solid fa-fire"></i>} heading='Energy burn' text='1345 Kal' bg='bg-yellow-100'/>
+                        <Card icon={<i className="fa-solid fa-heart"></i>} heading='Heart rate' text='78 bpm' bg='bg-red-100'/>
+                        <Card icon={<i className="fa-solid fa-running"></i>} heading='Steps' text='12,345' bg='bg-green-100'/>
+                        <Card icon={<i className="fa-solid fa-bed"></i>} heading='Sleep' text='8h 45m' bg='bg-blue-200'/>
                     </div>
                         <AreaChartComponent />
                 </div>

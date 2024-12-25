@@ -29,7 +29,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'height', 'weight', 'age']
+        fields = ['username', 'email', 'height', 'weight', 'age', 'avatar']
 
     def update(self, instance, validated_data):
         instance.email = validated_data.get('email', instance.email)

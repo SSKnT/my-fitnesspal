@@ -1,21 +1,52 @@
 import Button from "@/components/button"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { Navigate } from "react-router-dom"
+import { useAuth } from "@/context/AuthProvider" 
+import { updateUserProfileAPI } from "@/APIs/api"
 
 const Profile = () => {
-    const [profile, setProfile] = useState({
-    firstname:'',
-    lastname:'',
-    email:'',
-    age:0,
-    height:0,
-    weight:0,
-    password:''
-    })
+    const { user, setUser, loading } = useAuth();
+    const [profile, setProfile] = useState(null)
+
+    if (loading) {
+      return <h1 className="bg-darkBackground text-accentBackground font-bold text-6xl mx-auto my-auto">...</h1>;
+    }
+
+    if (!user) {
+      return <Navigate to='/auth' />;
+    }
+
+    useEffect(() => {
+      // If user is available, set profile
+      if (user) {
+          setProfile({
+              username: user.username,
+              email: user.email,
+              age: user.age,
+              height: user.height,
+              weight: user.weight
+          });
+      }
+    }, [user]); // runs when user changes
+
 
     const handleChange = (e) => {
         setProfile({...profile, [e.target.name]: e.target.value
         })
     }
+
+    const handleClick = async (e) => {
+      try{
+        const response = await updateUserProfileAPI(profile.username, profile.email, profile.age, profile.height, profile.weight);
+        if(response){
+          setUser(response);
+        }
+      } catch(error){
+        alert("Error updating profile");
+      }
+    }
+
+    if(!profile) return <h1 className="bg-darkBackground text-accentBackground font-bold text-5xl mx-auto my-auto  ">Loading Profile...</h1>
 
     return(
         <section className=" dark:bg-gray-900  my-4 lg:my-0">
@@ -51,39 +82,21 @@ const Profile = () => {
                 </p>
 
                 <form action="#" className="mt-8 grid grid-cols-6 gap-6">
-                  <div className="col-span-6 sm:col-span-3">
+                  <div className="col-span-6 ">
                     <label
-                      htmlFor="FirstName"
+                      htmlFor="username"
                       className="block text-sm font-medium text-gray-500 dark:text-gray-200"
                     >
-                      First Name
+                      Username
                     </label>
 
                     <input
                       type="text"
-                      id="FirstName"
-                      name="firstname"
-                      value={profile.firstname}
+                      id="username"
+                      name="username"
+                      value={profile.username}
                       onChange={(e) => handleChange(e)}
                       className="mt-1 w-full rounded-md border-none bg-gray-600 bg-opacity-30 text-sm text-gray-500 shadow-sm"
-                    />
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="LastName"
-                      className="block text-sm font-medium   text-gray-500 dark:text-gray-200"
-                    >
-                      Last Name
-                    </label>
-
-                    <input
-                      type="text"
-                      id="LastName"
-                      name="lastname"
-                      value={profile.lastname}
-                      onChange={(e) => handleChange(e)}
-                      className="mt-1 w-full rounded-md border-none bg-gray-600 bg-opacity-30 text-sm   text-gray-500 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                     />
                   </div>
 
@@ -143,7 +156,7 @@ const Profile = () => {
                   </div>
 
                   
-                  <div className="col-span-6 sm:col-span-3">
+                  <div className="col-span-6">
                     <label
                       htmlFor="PasswordConfirmation"
                       className="block text-sm font-medium   text-gray-500 dark:text-gray-200"
@@ -163,31 +176,13 @@ const Profile = () => {
                     />
                   </div>
 
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="PasswordConfirmation"
-                      className="block text-sm font-medium   text-gray-500 dark:text-gray-200"
-                    >
-                      Password
-                    </label>
-
-                    <input
-                      type="password"
-                      id="Password" 
-                      name="password"
-                      value={profile.password}
-                      onChange={(e) => handleChange(e)}
-                      className="mt-1 w-full rounded-md border-none bg-gray-600 bg-opacity-30 text-sm text-gray-500 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-                    />
-                  </div>
-
                 </form>
                 
                 <div className="flex flex-col w-full mt-6 items-center space-y-2">
                     <p className="text-sm text-[#b3b3b3]">Click the button to save any changes.</p>
                     <Button 
                         className="inline-block shrink-0 w-[30%] text-center mx-auto rounded-md border border-accentBackground bg-transparent px-12 py-3 text-sm font-medium text-accentBackground transition hover:bg-accentBackground hover:text-white focus:outline-none focus:ring active:text-accentBackground dark:hover:bg-blue-700 dark:hover:text-white"
-                        onClick={(e) => handleChange(e)}
+                        onClick={(e) => {handleClick(e)}}
                     >
                         Save
                     </Button>

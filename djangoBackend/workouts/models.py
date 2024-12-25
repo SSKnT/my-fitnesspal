@@ -18,6 +18,7 @@ class Workouts(models.Model):
     user = models.ManyToManyField(CustomUser, through='UserWorkout', related_name='enrolled_workouts')
     image_url = models.URLField(blank=True, null=True)
     difficulty = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default='Pending')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

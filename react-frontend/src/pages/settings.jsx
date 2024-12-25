@@ -6,7 +6,7 @@ const Settings= () => {
     <div className="min-h-screen bg-darkBg text-gray-200 p-6 flex flex-col justify-between">
       {/* Header */}
       <header className="text-center mb-8">
-        <h1 className="text-4xl font-semibold text-gray-100">Settings</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-100">Settings</h1>
         <p className="text-sm text-gray-400 mt-1">
           Customize your experience and manage your account.
         </p>
@@ -15,9 +15,9 @@ const Settings= () => {
       {/* Content Sections */}
       <main className="space-y-6 flex-grow">
         {/* About This App */}
-        <section className="bg-gray-800 p-4 rounded-lg shadow-lg">
+        <section className="bg-gray-500 bg-opacity-10 p-4 text-sm rounded-lg shadow-lg">
             <h2 className="text-2xl font-medium">About This App</h2>
-            <p className="mt-2 text-gray-400">
+            <p className="mt-2 text-gray-400 text-md">
                 This app helps you track your fitness goals with personalized tools designed to keep you motivated.
             </p>
             <div className="mt-4 flex items-center space-x-4">
@@ -49,35 +49,35 @@ const Settings= () => {
         </section>
 
         {/* FAQ Section */}
-                <section className="bg-gray-800 p-4 rounded-lg shadow-lg">
+                <section className="bg-gray-500 bg-opacity-10 p-4 rounded-lg shadow-lg">
                     <h2 className="text-2xl font-medium">FAQ</h2>
                     <Accordion type="single" collapsible>
                         <AccordionItem value="faq-1">
-                            <AccordionTrigger className="text-gray-300 hover:text-gray-100">How do I reset my password?</AccordionTrigger>
+                            <AccordionTrigger className="text-gray-300 text-sm hover:text-gray-100">How do I reset my password?</AccordionTrigger>
                             <AccordionContent className="text-gray-400">
                                 Go to account settings and click "Reset Password." Follow the on-screen instructions.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="faq-2">
-                            <AccordionTrigger className="text-gray-300 hover:text-gray-100">Is there a subscription fee?</AccordionTrigger>
+                            <AccordionTrigger className="text-gray-300 text-sm hover:text-gray-100">Is there a subscription fee?</AccordionTrigger>
                             <AccordionContent className="text-gray-400">
                                 The app is free to use. Premium features may be introduced later.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="faq-3">
-                            <AccordionTrigger className="text-gray-300 hover:text-gray-100">How do I track my workouts?</AccordionTrigger>
+                            <AccordionTrigger className="text-gray-300 text-sm hover:text-gray-100">How do I track my workouts?</AccordionTrigger>
                             <AccordionContent className="text-gray-400">
                                 You can track your workouts by navigating to the "Workouts" section and logging your activities.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="faq-4">
-                            <AccordionTrigger className="text-gray-300 hover:text-gray-100">Can I sync data with other fitness apps?</AccordionTrigger>
+                            <AccordionTrigger className="text-gray-300 text-sm hover:text-gray-100">Can I sync data with other fitness apps?</AccordionTrigger>
                             <AccordionContent className="text-gray-400">
                                 Yes, you can sync data with other fitness apps by going to the "Settings" and selecting "Sync Data."
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="faq-5">
-                            <AccordionTrigger className="text-gray-300 hover:text-gray-100">How do I contact support?</AccordionTrigger>
+                            <AccordionTrigger className="text-gray-300 text-sm hover:text-gray-100">How do I contact support?</AccordionTrigger>
                             <AccordionContent className="text-gray-400">
                                 You can contact support by navigating to the "Help" section and clicking on "Contact Support."
                             </AccordionContent>
@@ -87,16 +87,16 @@ const Settings= () => {
         
 
         {/* Other Settings */}
-        <section className="bg-gray-800 p-4 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-medium">Other Settings</h2>
+        <section className="bg-gray-500 bg-opacity-10 p-4 rounded-lg shadow-lg">
+          <h2 className="text-2xl font-medium"></h2>
           <ul className="mt-4 space-y-2">
             <li>
-              <button className="w-full text-left bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-3 rounded-lg">
+              <button className="w-full text-left bg-gray-200 bg-opacity-10 hover:bg-accentBackground hover:bg-opacity-20 text-gray-300 px-4 py-3 rounded-lg">
                 Notifications
               </button>
             </li>
             <li>
-              <button className="w-full text-left bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-3 rounded-lg">
+              <button className="w-full text-left bg-gray-200 bg-opacity-10 hover:bg-accentBackground hover:bg-opacity-20 text-gray-300 px-4 py-3 rounded-lg">
                 Privacy & Security
               </button>
             </li>
@@ -106,7 +106,7 @@ const Settings= () => {
 
       {/* Log Out */}
       <footer className="flex mt-8 w-full justify-center">
-        <button className="w-[30%] bg-accentBackground text-white px-6 py-3 rounded-lg text-lg font-medium hover:opacity-90">
+        <button className="inline-block shrink-0 rounded-md border border-accentBackground bg-accentBackground px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-accentBackground focus:outline-none focus:ring active:text-accentBackground dark:hover:bg-blue-700 dark:hover:text-white">
           Log Out
         </button>
       </footer>

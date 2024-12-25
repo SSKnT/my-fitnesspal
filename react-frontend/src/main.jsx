@@ -4,7 +4,5 @@ import './index.css'
 import AppRoutes from './appRoutes'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
     <AppRoutes />
-  </StrictMode>,
 )

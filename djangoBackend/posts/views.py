@@ -1,5 +1,5 @@
 from .models import Post
-from .serializers import PostSerializer
+from .serializers import PostSerializer, CustomPostSerializer
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
@@ -10,7 +10,7 @@ class AllPostsView(ListAPIView):
 
 class PostListCreateView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = PostSerializer
+    serializer_class = CustomPostSerializer
 
     def get_queryset(self):
         user = self.request.user

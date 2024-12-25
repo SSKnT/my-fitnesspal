@@ -6,6 +6,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
+import { Link } from "react-router-dom";
 
 
 const DropdownComponent = ({trigger, content, label=''}) => {
@@ -20,7 +21,11 @@ const DropdownComponent = ({trigger, content, label=''}) => {
             <DropdownMenuLabel>{label}</DropdownMenuLabel>
             <DropdownMenuSeparator className='bg-gray-500 bg-opacity-50' />
             {content.map((item, index) => (
-                <DropdownMenuItem key={index}>{item}</DropdownMenuItem>
+                <DropdownMenuItem key={index}>
+                  <Link to={item.link}>
+                    {item.label}
+                  </Link>
+                  </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>

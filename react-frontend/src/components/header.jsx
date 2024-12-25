@@ -1,8 +1,7 @@
 import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import DropdownComponent from "@/components/dropdown"
-
+import { useAuth } from "@/context/AuthProvider";
 
 const Header = () => {
   return (
@@ -55,9 +54,9 @@ const Dropdown = () => {
     <DropdownComponent
       trigger={<AvatarSection />}
       content={[
-        "Profile",
-        "Settings",
-        "Logout"
+        {label:"Profile", link:"/profile"},
+        {label:"Settings", link:"/settings"},
+        {label:"Logout", link:"/auth"}
       ]}
       label="My Account"
        />
@@ -65,14 +64,24 @@ const Dropdown = () => {
 }
 
 const AvatarSection = () => {
+  const { user, loading } = useAuth();
+
+  if(loading){
+    return <p>Loading...</p>
+  }
+
+  if(!user){
+    return <p>No data...</p>
+  }
+
   return(
     <div className='flex items-center justify-center h-full space-x-2'>
       <Avatar className='h-[80%] md:h-[75%] object-contain' >
-        <AvatarImage src="https://example.com/placeholder" />
+        <AvatarImage src={user.avatar} />
         <AvatarFallback className='bg-zinc-500 text-accent'>JD</AvatarFallback>
       </Avatar>
       <span className="hidden md:flex space-x-1 items-center justify-center">
-        <p className='text-sm font-light font-inter text-primaryText'>John Doe</p>
+        <p className='text-sm font-light font-inter text-primaryText'>{user.username}</p>
         <i className="fa-solid fa-chevron-down text-xs text-gray-500"></i>
       </span>
     </div>

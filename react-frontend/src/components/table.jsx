@@ -1,15 +1,31 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useEffect, useState } from 'react';
+import { getUserEnrolledWorkoutsAPI } from '../APIs/api';
 
 const WorkoutTable = () => {
-  const rows = [
-    { id: 1, workoutName: 'Cardio Blast', status: 'Done' },
-    { id: 2, workoutName: 'Strength Training', status: 'Pending' },
-    { id: 3, workoutName: 'Yoga Flex', status: 'Done' },
-    { id: 4, workoutName: 'Pilates Core', status: 'Pending' },
-    { id: 5, workoutName: 'HIIT Extreme', status: 'Done' },
-  ];
+  const [workouts, setWorkouts] = useState([]);
+
+  useEffect(() => {
+    const fetchWorkouts = async () => {
+      try{
+        const response = await getUserEnrolledWorkoutsAPI();
+        if(response){
+          const processedRows = response.map((workout, index) => ({
+            id: index + 1,
+            workoutName: workout.name,
+            status: workout.status
+          }))
+          setWorkouts(processedRows)
+        };
+
+      } catch(error){
+        console.error(error);
+      }
+    }
+    fetchWorkouts();
+  }, []);
 
   const columns = [
     { field: 'id', headerName: '#', width: 50 },
@@ -38,7 +54,7 @@ const WorkoutTable = () => {
   return (
     <div style={{ height: 371, width: '100%', marginTop:'2rem' }}>
       <DataGrid
-        rows={rows}
+        rows={workouts}
         columns={columns}
         pageSize={5}
         isCellEditable={() => false}

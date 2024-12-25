@@ -1,8 +1,12 @@
 import { useState } from "react";
 import Button from "@/components/button";
+import { loginAPI, getUserProfileAPI, signupAPI } from "@/APIs/api";
+import { useAuth } from "@/context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const AuthForms = () => {
   const [isLogin, setIsLogin] = useState(false);
+
 
   return (
     <section className="bg-white w-full dark:bg-gray-900 my-auto bg-cover lg:bg-none ">
@@ -11,9 +15,9 @@ const AuthForms = () => {
 
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
           {isLogin ? (
-            <Login setIsLogin={setIsLogin} />
-          ) : (
             <Signup setIsLogin={setIsLogin} />
+          ) : (
+            <Login setIsLogin={setIsLogin} />
           )}
         </main>
       </div>
@@ -57,42 +61,61 @@ const ImageSection = () => {
 };
 
 const Signup = ({ setIsLogin }) => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("")
+  const [age, setAge] = useState(1);
+  const [weight, setWeight] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  const handleClick = async (e) => {
+    e.preventDefault()
+
+    if(age<1 || weight<30 || height < 50 )
+      return;
+
+    try{
+      const response = await signupAPI(username, password, email, age, height, weight);
+      if (response.status === 201){
+        setTimeout(() => {
+          setIsLogin(false);
+          alert("Account created successfully");
+        }, 200)
+        
+      }
+      else{
+        alert("Error creating account");
+      }
+    } catch (error) {
+      alert("error creating account")
+    }
+  }
+
   return (
     <div className="max-w-xl lg:max-w-3xl">
       <div className="text-center mb-0">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-200">Create Your Account</h2>
       </div>
       <form action="#" className="mt-8 grid grid-cols-6 gap-4">
-        <div className="col-span-6 sm:col-span-3">
-          <label
-            htmlFor="FirstName"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
-          >
-            First Name
-          </label>
-          <input
-            type="text"
-            id="FirstName"
-            name="first_name"
-            className="mt-1 w-full rounded-md focus:ring-0 focus:border-accentBackground border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-          />
-        </div>
-        <div className="col-span-6 sm:col-span-3">
-          <label
-            htmlFor="LastName"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
-          >
-            Last Name
-          </label>
-          <input
-            type="text"
-            id="LastName"
-            name="last_name"
-            className="mt-1 w-full rounded-md focus:ring-0 focus:border-accentBackground border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-          />
-        </div>
+          
+        <UsernameInput username={username} setUsername={setUsername}/>
 
-        <EmailInput />
+        <div className="col-span-6 ">
+          <label
+            htmlFor="Email"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => {setEmail(e.target.value)}}
+            className="mt-1 w-full rounded-md focus:ring-0 focus:border-accentBackground border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+          />
+        </div>
 
         <div className="col-span-6 sm:col-span-2">
           <label
@@ -107,6 +130,8 @@ const Signup = ({ setIsLogin }) => {
             name="age"
             min="1"
             max="100"
+            value={age}
+            onChange={(e) => {setAge(e.target.value)}}
             required
             className="mt-1 w-full rounded-md focus:ring-0 focus:border-accentBackground border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
           />
@@ -125,6 +150,8 @@ const Signup = ({ setIsLogin }) => {
             name="weight"
             min="20"
             max="200"
+            value={weight}
+            onChange={(e) => {setWeight(e.target.value)}}
             required
             placeholder="Kg"
             className="mt-1 w-full rounded-md focus:ring-0 focus:border-accentBackground border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
@@ -144,13 +171,15 @@ const Signup = ({ setIsLogin }) => {
             name="height"
             min="100"
             max="250"
+            value={height}
+            onChange={(e) => {setHeight(e.target.value)}}
             required
             placeholder="Cm"
             className="mt-1 w-full rounded-md focus:ring-0 focus:border-accentBackground border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
           />
         </div>
 
-        <PasswordInput />
+        <PasswordInput password={password} setPassword={setPassword}/>
 
         <div className="col-span-6 sm:col-span-3">
           <label
@@ -202,7 +231,10 @@ const Signup = ({ setIsLogin }) => {
           </p>
         </div>
         <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-          <Button className="inline-block shrink-0 rounded-md border border-accentBackground bg-accentBackground px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-accentBackground focus:outline-none focus:ring active:text-accentBackground dark:hover:bg-blue-700 dark:hover:text-white">Create an account</Button>
+          <Button className="inline-block shrink-0 rounded-md border border-accentBackground bg-accentBackground px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-accentBackground focus:outline-none focus:ring active:text-accentBackground dark:hover:bg-blue-700 dark:hover:text-white"
+            onClick={handleClick}
+          >
+            Create an account</Button>
 
           <p className="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-400">
             Already have an account?
@@ -210,7 +242,7 @@ const Signup = ({ setIsLogin }) => {
               href="#"
               className="text-accentBackground ml-1 underline dark:text-gray-200"
               onClick={(e) => {
-                setIsLogin(true);
+                setIsLogin(false);
                 e.preventDefault();
               }}
             >
@@ -225,6 +257,46 @@ const Signup = ({ setIsLogin }) => {
 };
 
 const Login = ({ setIsLogin }) => {
+  const { login } = useAuth();
+  const { setAccess } = useAuth();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try{
+      const response = await loginAPI(username, password);
+
+      if (response.access){
+        // add bearer token to api and sets accessToken value
+        setAccess(response.access);
+        const userdata = await getUserData();
+        if(userdata){
+          login(userdata, response.access);
+          navigate('/dashboard');
+        }
+        else{
+          alert('Error fetching user data');
+        }
+      }
+      else{
+        alert('Invalid username or password');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const getUserData = async () => {
+    try {
+      const response = await getUserProfileAPI();
+      return response;
+    } catch (error) {
+      alert('Error fetching user data');
+    }
+  }
+
   return (
     <div className="max-w-xl lg:max-w-3xl">
       <div className="text-center mb-8">
@@ -234,8 +306,8 @@ const Login = ({ setIsLogin }) => {
         </p>
       </div>
       <form action="#" className="mt-8 grid grid-cols-6 gap-6">
-        <EmailInput />
-        <PasswordInput colSpan="sm:col-span-6" />
+        <UsernameInput username={username} setUsername={setUsername}/>
+        <PasswordInput password={password} setPassword={setPassword} colSpan="sm:col-span-6" />
         <div className="col-span-6 flex items-center justify-between">
           <label htmlFor="RememberMe" className="flex items-center">
             <input
@@ -251,16 +323,18 @@ const Login = ({ setIsLogin }) => {
           </a>
         </div>
         <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-          <Button className="inline-block shrink-0 rounded-md border border-accentBackground bg-accentBackground px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-accentBackground focus:outline-none focus:ring active:text-accentBackground dark:hover:bg-blue-700 dark:hover:text-white">
+          <button className="inline-block shrink-0 rounded-md border border-accentBackground bg-accentBackground px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-accentBackground focus:outline-none focus:ring active:text-accentBackground dark:hover:bg-blue-700 dark:hover:text-white"
+            onClick={handleClick}
+          >
             Log in
-          </Button>
+          </button>
           <p className="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-400">
             Don't have an account?
             <a
               href="#"
               className="text-accentBackground ml-1 underline dark:text-gray-200"
               onClick={(e) => {
-                setIsLogin(false);
+                setIsLogin(true);
                 e.preventDefault();
               }}
             >
@@ -274,19 +348,21 @@ const Login = ({ setIsLogin }) => {
   );
 };
 
-const EmailInput = () => {
+const UsernameInput = ({username, setUsername}) => {
   return (
     <div className="col-span-6">
       <label
-        htmlFor="Email"
+        htmlFor="name"
         className="block text-sm font-medium text-gray-700 dark:text-gray-200"
       >
-        Email
+        Username
       </label>
       <input
-        type="email"
-        id="Email"
-        name="email"
+        type="text"
+        id="username"
+        name="username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
         required
         className="mt-1 w-full rounded-md focus:ring-0 focus:border-accentBackground border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
       />
@@ -294,7 +370,7 @@ const EmailInput = () => {
   );
 };
 
-const PasswordInput = ({colSpan='sm:col-span-3'}) => {
+const PasswordInput = ({password, setPassword, colSpan='sm:col-span-3'}) => {
   return (
     <div className={`col-span-6 ${colSpan}`}>
       <label
@@ -307,6 +383,8 @@ const PasswordInput = ({colSpan='sm:col-span-3'}) => {
         type="password"
         id="Password"
         name="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         required
         className="mt-1 w-full rounded-md focus:ring-0 focus:border-accentBackground border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
       />

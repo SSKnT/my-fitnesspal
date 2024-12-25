@@ -1,12 +1,15 @@
 import { Separator } from '@/components/ui/separator'
-import { useState, useEffect, useRef } from 'react';
 
 const Post = ({ heading='', img='', date='', likes=0, user={}}) => {
+    const datetimestamp = new Date(date);
+    const datestring = datetimestamp.toDateString();
+    // the datestring is in the format of "Mon Aug 23 2021"
+
     return(
         <div className=" w-full flex flex-col px-2 md:px-8 ">
             <Separator className='bg-gray-500 bg-opacity-30 mb-1' />
             <div className='px-3 md:px-4'>
-                <CardDateAvatar date={date} user={user}/>
+                <CardDateAvatar date={datestring} user={user}/>
                 <CardHeading heading={heading}/>
                 <CardImg img={img}/>
                 <CardBottom likes={likes} />
@@ -63,14 +66,14 @@ const CardBottom = ({likes}) =>{
             {/* Like Button */}
             <div className='rounded-3xl flex justify-between bg-neutral-400 bg-opacity-40'>
                 <div className='p-1 rounded-full text-gray-100 hover:text-blue-400 hover:bg-neutral-500 bg-opacity-50'>
-                    <svg class="w-[16px] h-[16px] md:w-[21px] md:h-[21px]  dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
+                    <svg className="w-[16px] h-[16px] md:w-[21px] md:h-[21px]  dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
                     </svg>
                 </div>
                 <p className='text-xs my-auto text-gray-100 dark:text-white'>{likes}</p>
                 <div className='p-1 rounded-full text-gray-100 hover:text-red-400 hover:bg-neutral-500 bg-opacity-50'>
-                    <svg class="w-[16px] h-[16px] md:w-[21px] md:h-[21px] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 19V5m0 14-4-4m4 4 4-4"/>
+                    <svg className="w-[16px] h-[16px] md:w-[21px] md:h-[21px] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M12 19V5m0 14-4-4m4 4 4-4"/>
                     </svg>
                 </div>
             </div>
@@ -78,8 +81,8 @@ const CardBottom = ({likes}) =>{
             {/* Share Button */}
             <div className='rounded-3xl flex justify-between space-x-1 px-2 py-1 bg-neutral-400 bg-opacity-40 hover:bg-opacity-60'>
                 <div className=' rounded-full text-gray-100'>
-                    <svg class="w-[16px] h-[16px] md:w-[21px] md:h-[21px] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m15.141 6 5.518 4.95a1.05 1.05 0 0 1 0 1.549l-5.612 5.088m-6.154-3.214v1.615a.95.95 0 0 0 1.525.845l5.108-4.251a1.1 1.1 0 0 0 0-1.646l-5.108-4.251a.95.95 0 0 0-1.525.846v1.7c-3.312 0-6 2.979-6 6.654v1.329a.7.7 0 0 0 1.344.353 5.174 5.174 0 0 1 4.652-3.191l.004-.003Z"/>
+                    <svg className="w-[16px] h-[16px] md:w-[21px] md:h-[21px] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="m15.141 6 5.518 4.95a1.05 1.05 0 0 1 0 1.549l-5.612 5.088m-6.154-3.214v1.615a.95.95 0 0 0 1.525.845l5.108-4.251a1.1 1.1 0 0 0 0-1.646l-5.108-4.251a.95.95 0 0 0-1.525.846v1.7c-3.312 0-6 2.979-6 6.654v1.329a.7.7 0 0 0 1.344.353 5.174 5.174 0 0 1 4.652-3.191l.004-.003Z"/>
                     </svg>
                 </div>
                 <p className='text-xs my-auto text-gray-100 dark:text-white'>Share</p>
