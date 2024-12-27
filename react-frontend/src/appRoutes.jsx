@@ -8,6 +8,8 @@ import Profile from '@/pages/profile';
 import Settings from '@/pages/settings';
 import { AuthProvider } from './context/AuthProvider';
 import ProtectedRoutes from './protectedRoutes';
+import 'react-toastify/dist/ReactToastify.css';
+import {  ToastContainer } from 'react-toastify';
 
 export default function AppRoutes() {   
     return(
@@ -31,6 +33,18 @@ export default function AppRoutes() {
                     </Route>
                 </Routes>
             </Router>
+            <ToastContainer 
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme='colored'
+            />
         </AuthProvider>
     )
 }

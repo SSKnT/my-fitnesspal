@@ -5,6 +5,7 @@ import { getCommunityPostsAPI } from "@/APIs/api"
 import { useAuth } from "@/context/AuthProvider"
 import { useEffect, useState } from "react"
 import { Navigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 const Community = () => {
     const [posts, setPosts] = useState([]);
@@ -20,7 +21,7 @@ const Community = () => {
                 const response = await getCommunityPostsAPI();
                 setPosts(response);
             } catch(error){
-                alert("Error fetching posts");
+                toast.error("Error fetching posts");
             }
                 
         }

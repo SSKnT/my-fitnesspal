@@ -3,6 +3,7 @@ import Button from "@/components/button";
 import { loginAPI, getUserProfileAPI, signupAPI } from "@/APIs/api";
 import { useAuth } from "@/context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const AuthForms = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -71,7 +72,7 @@ const Signup = ({ setIsLogin }) => {
   const handleClick = async (e) => {
     e.preventDefault()
 
-    if(age<1 || weight<30 || height < 50 )
+    if(age<1 || weight<30 || height < 50 || password == "" || username == "" || email == "")
       return;
 
     try{
@@ -79,15 +80,15 @@ const Signup = ({ setIsLogin }) => {
       if (response.status === 201){
         setTimeout(() => {
           setIsLogin(false);
-          alert("Account created successfully");
+          toast.success("Account created successfully! Please login to continue.", { autoClose: 2000 } )  
         }, 200)
         
       }
       else{
-        alert("Error creating account");
+        toast.error("Error creating account")
       }
     } catch (error) {
-      alert("error creating account")
+      toast.error("Error creating account")
     }
   }
 
@@ -265,8 +266,13 @@ const Login = ({ setIsLogin }) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
+
+    if( username == "" || password == "")
+      return;
+
     try{
       const response = await loginAPI(username, password);
+      
 
       if (response.access){
         // add bearer token to api and sets accessToken value
@@ -277,11 +283,12 @@ const Login = ({ setIsLogin }) => {
           navigate('/dashboard');
         }
         else{
-          alert('Error fetching user data');
+          toast.error("Error fetching user data");
         }
       }
       else{
-        alert('Invalid username or password');
+        toast.error("Invalid credentials");
+        setTimeout(() => {}, 2000);
       }
     } catch (error) {
       console.error(error);
@@ -293,7 +300,7 @@ const Login = ({ setIsLogin }) => {
       const response = await getUserProfileAPI();
       return response;
     } catch (error) {
-      alert('Error fetching user data');
+      toast.error('Error fetching user data');
     }
   }
 

@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { createCommunityPostAPI } from "@/APIs/api";
+import { toast } from "react-toastify";
 
 
 const RightSidebar = () => {
@@ -37,17 +38,18 @@ const PostSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      console.log(title, image, content);
       const response = await createCommunityPostAPI(title, image, content);
-      console.log(response)
       if(response.status === 201){
-        alert("Post created successfully");
+        toast.success("Post created successfully");
+        setTitle("");
+        setImage("");
+        setContent("");
       }
       else{ 
-        alert("Error creating post");
+        toast.error("Error creating post");
       }
     } catch(error){
-      alert("Error creating post");
+      toast.error("Error creating post");
     }
   }
   

@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { enrollWorkoutAPI } from '@/APIs/api';
-
+import { toast } from 'react-toastify';
 
 const WorkoutCard = ({date, img, heading, text, id }) => {
     return(
@@ -52,14 +52,14 @@ const CardContent = ({heading, text, id}) => {
     const response = await enrollWorkoutAPI(id);
 
     if(response.status === 200){
-      alert("Enrolled Successfully");
+      toast.success("Workout Enrolled");
     }
   
     else{
       if(response.status === 400)
-        alert("Already Enrolled");
+        toast.error("Workout already enrolled");
       else
-        alert("Error enrolling workout");
+        toast.error("Workout already enrolled.");
       
     }
     console.log(response);

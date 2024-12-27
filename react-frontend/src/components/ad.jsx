@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const Ad = () => {
 
   return (
@@ -23,7 +25,7 @@ const Ad = () => {
         </p>
         <button
           className="inline-block shrink-0 w-[55%] rounded-md border border-accentBackground bg-accentBackground py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-accentBackground focus:outline-none focus:ring active:text-accentBackground dark:hover:bg-blue-700 dark:hover:text-white"
-          onClick={() => alert("Shop Timex Now")}
+          onClick={() => toast.success("Redirecting to Shop")}
         >
           Shop Now
         </button>

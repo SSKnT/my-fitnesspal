@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { Navigate } from "react-router-dom"
 import { useAuth } from "@/context/AuthProvider" 
 import { updateUserProfileAPI } from "@/APIs/api"
+import { toast } from "react-toastify"
 
 const Profile = () => {
     const { user, setUser, loading } = useAuth();
@@ -40,9 +41,10 @@ const Profile = () => {
         const response = await updateUserProfileAPI(profile.username, profile.email, profile.age, profile.height, profile.weight);
         if(response){
           setUser(response);
+          toast.success("Profile updated successfully");
         }
       } catch(error){
-        alert("Error updating profile");
+        toast.error("Error updating profile");
       }
     }
 
